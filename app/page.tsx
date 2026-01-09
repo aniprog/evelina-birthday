@@ -68,7 +68,7 @@ export default function BirthdayPage() {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-5xl font-bold text-pink-600"
+          className="text-4xl font-bold text-pink-600"
         >
           Շնորհավոր ծնունդդ <br/>💖 Էվա ջան 💖
         </motion.h1>
