@@ -1,26 +1,28 @@
-"use client";
+"use client"; // this is a client component
 
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-const BALLOON_EMOJIS = ['🎈','🎉','🎊','🎈','🎉','🎊','🎈','🎉','🎊','🎈'];
+// Balloon emojis
+const BALLOON_EMOJIS = ["🎈","🎉","🎊","🎈","🎉","🎊","🎈","🎉","🎊","🎈"];
 
 export default function BirthdayPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
 
+  // Store balloon positions
   const [balloons, setBalloons] = useState<{emoji: string, x: number, delay: number, duration: number}[]>([]);
 
+  // Initialize balloons **only on client**
   useEffect(() => {
-    const width = window.innerWidth - 50; // margin so balloons don't go off-screen
-    setBalloons(
-      BALLOON_EMOJIS.map((emoji) => ({
-        emoji,
-        x: Math.random() * width,
-        delay: Math.random() * 5,
-        duration: 8 + Math.random() * 5,
-      }))
-    );
+    const width = window.innerWidth - 50; // keep balloons inside screen
+    const newBalloons = BALLOON_EMOJIS.map(emoji => ({
+      emoji,
+      x: Math.random() * width,
+      delay: Math.random() * 5,
+      duration: 8 + Math.random() * 5
+    }));
+    setBalloons(newBalloons);
   }, []);
 
   const toggleMusic = () => {
@@ -35,6 +37,7 @@ export default function BirthdayPage() {
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-500 p-6 relative overflow-hidden text-center text-3xl">
+      {/* Music player */}
       <audio ref={audioRef} loop>
         <source src="/music.mp3" type="audio/mpeg" />
       </audio>
@@ -50,7 +53,7 @@ export default function BirthdayPage() {
             repeat: Infinity,
             repeatType: "loop",
             ease: "linear",
-            delay: b.delay,
+            delay: b.delay
           }}
           className="absolute text-4xl"
         >
@@ -58,21 +61,24 @@ export default function BirthdayPage() {
         </motion.div>
       ))}
 
+      {/* Main card */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1 }}
         className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl max-w-3xl w-full p-12"
       >
+        {/* Title */}
         <motion.h1
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-4xl font-bold text-pink-600"
+          className="text-3xl font-bold text-pink-600"
         >
-          Շնորհավոր ծնունդդ <br/>💖 Էվա ջան 💖
+          Շնորհավոր ծնունդդ <br />💖 Էվա ջան 💖
         </motion.h1>
 
+        {/* Birthday wishes */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -85,6 +91,7 @@ export default function BirthdayPage() {
 `}
         </motion.p>
 
+        {/* Music button */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
